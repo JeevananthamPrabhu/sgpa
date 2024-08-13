@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGPA Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 30px auto;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            min-width: 100px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 22px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SGPA Calculator</h1>
+        <form id="sgpaForm">
+            <div class="form-group">
+                <label for="MPE">MPE Grade:</label>
+                <select id="MPE" name="MPE">
+                    <option value="O">O</option>
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="WP">WP Grade:</label>
+                <select id="WP" name="WP">
+                    <option value="O">O</option>
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="BDA">BDA Grade:</label>
+                <select id="BDA" name="BDA">
+                    <option value="O">O</option>
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="IPR">IPR Grade:</label>
+                <select id="IPR" name="IPR">
+                    <option value="O">O</option>
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="SE">SE Grade:</label>
+                <select id="SE" name="SE">
+                    <option value="O">O</option>
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="DPPM">DPPM Grade:</label>
+                <select id="DPPM" name="DPPM">
+                    <option value="O">O</option>
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="MPIV">MP-IV Grade:</label>
+                <select id="MPIV" name="MPIV">
+                    <option value="O">O</option>
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="MOOC">MOOC Grade:</label>
+                <select id="MOOC" name="MOOC">
+                    <option value="O">O</option>
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Apt">Apt Grade:</label>
+                <select id="Apt" name="Apt">
+                    <option value="O">O</option>
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <button type="button" onclick="calculateSGPA()">Calculate SGPA</button>
+        </form>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function calculateSGPA() {
+            // Grade points map
+            const gradePoints = {
+                "O": 10,
+                "A+": 9,
+                "A": 8,
+                "B+": 7,
+                "B": 6,
+                "C": 5
+            };
+
+            // Course credits map
+            const courseCredits = {
+                "MPE": 2,
+                "WP": 4,
+                "BDA": 4,
+                "IPR": 3,
+                "SE": 3,
+                "DPPM": 3,
+                "MPIV": 1,
+                "MOOC": 1,
+                "Apt": 1
+            };
+
+            let totalCredits = 0;
+            let totalSum = 0;
+
+            // Iterate through the form fields
+            for (let course in courseCredits) {
+                const grade = document.getElementById(course).value;
+                const point = gradePoints[grade];
+                totalSum += courseCredits[course] * point;
+                totalCredits += courseCredits[course];
+            }
+
+            const sgpa = totalSum / totalCredits;
+            document.getElementById("result").innerText = "SGPA: " + sgpa.toFixed(4);
+        }
+    </script>
+</body>
+</html>
